@@ -13,7 +13,7 @@ var Nav = React.createClass({
     render: function () {
         return (
             <h3>Nav component</h3>
-            )
+            );
     }
 });
 
