@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+
+  <title>Held you for a little while</title>
+</head>
+
+<body>
+<!--    container node-->
+  <div id="jsx"></div>
+    
+    <!--    container node-->
+  <div id="dom"></div>
+    
+    <script src="http://fb.me/react-0.11.1.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+    <script type="text/jsx">
+        /** @jsx React.DOM */
+        
+var MessageBoxJSX = React.createClass ({
+    getInitialState: function(){
+        return {
+            isVisible: true,
+            titleMessage: 'Labas rytas, JSX',
+            messageMaps: [
+                'pirma žinute.',
+                'antra žinutė.',
+                'trečia žinutė.',
+                'ketvirta žinutė.'
+            ]
+        }
+    },
+    
+    render: function(){
+        var inlineState= {
+            display: this.state.isVisible ? 'block' : 'none'
+        }
+        
+        var subMessage = 'Nemalonu matyti.';
+        var messageMapsPublic = this.state.messageMaps.map(function(messageMap){
+            return <div><SubMessageMap amessage={messageMap} /></div>;
+        });
+        return (
+            <div className="container jumbotron" style={inlineState}>
+                <h1>Labas rytas, JSX</h1>
+                <SubMessage message={subMessage}/>
+                { messageMapsPublic }
+            </div>
+            );
+    }
+});
+
+var SubMessageMap = React.createClass({
+    getDefaultProps: function () {
+        return {
+            amessage: 'Masyvo elementų išspasudinimas.'
+        }    
+    },
+    
+    render: function(){
+        return (
+            <small>{this.props.amessage}</small>
+        );
+    }
+});
+
+
+var SubMessage = React.createClass({
+//    propTypes: function() {
+////        message: React.PropTypes.string.isRequired;
+//    },
+    
+    getDefaultProps: function(){
+        return {
+            message: 'Malonu tave matyti.'
+        }
+    },
+    render: function(){
+        return (
+            <small>{this.props.message}</small>
+        );
+    }
+});
+
+
+var reactComponent = React.renderComponent(
+    <MessageBoxJSX />,
+    document.getElementById('jsx')
+);
+
+    </script>
+</body>
+
+</html>
