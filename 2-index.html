@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+
+  <title>Held you for a little while</title>
+</head>
+
+<body>
+<!--    container node-->
+  <div id="jsx"></div>
+    
+    <!--    container node-->
+  <div id="dom"></div>
+    
+    <script src="http://fb.me/react-0.11.1.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+    <script type="text/jsx">
+        /** @jsx React.DOM */
+        
+var MessageBoxJSX = React.createClass ({
+    render: function(){
+        return (
+            <div className="container">
+                <h1>Labas rytas, JSX</h1>
+                <SubMessage />
+            </div>
+            );
+    }
+});
+
+var MessageBoxDOM = React.createClass({
+    render: function () {
+        return React.DOM.h1(
+            {className: 'container'},
+            (null, "Labas vakaras, DOM"),
+            SubMessage(null)
+        );
+    }
+})
+
+var SubMessage = React.createClass({
+    render: function(){
+        return (
+            <small>Malonu tave matyti.</small>
+        );
+    }
+});
+
+var reactComponentJSX = React.renderComponent(
+    <MessageBoxJSX />,
+    document.getElementById('jsx')
+);
+
+var reactComponentDOM = React.renderComponent(
+    MessageBoxDOM(null),
+    document.getElementById('dom')
+);
+
+    </script>
+</body>
+
+</html>
