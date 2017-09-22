@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    
+
+
+  <title>Held you for a little while</title>
+</head>
+
+<body>
+<!--    container node-->
+  <div id="jsx"></div>
+    
+    <!--    container node-->
+  <div id="dom"></div>
+    
+    <script src="http://fb.me/react-0.11.1.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.11.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+    <script type="text/jsx">
+        /** @jsx React.DOM */
+        
+var MessageBoxJSX = React.createClass ({
+    deleteMessage: function(amessage){
+        //console.log('deleting...');
+        //console.log(amessage);
+        var newMessagesAfterDelete = _.without(this.state.messageMaps, amessage);
+        this.setState({
+            messageMaps: newMessagesAfterDelete
+        });
+        // console.log(newMessagesAfterDelete);
+    },
+    
+    handleAdd: function(e) {
+        //console.log(this); console.log(e.target);
+        var newMessage = this.refs.newMessage.getDOMNode().value;
+        console.log(newMessage)
+        var newMessages = this.state.messageMaps.concat([newMessage]);
+        this.setState({
+            messageMaps: newMessages
+        });
+    },
+    
+    getInitialState: function(){
+        return {
+            isVisible: true,
+            titleMessage: 'Labas rytas, JSX',
+            messageMaps: [
+                'pirma žinute.',
+                'antra žinutė.',
+                'trečia žinutė.',
+                'ketvirta žinutė.'
+            ]
+        }
+    },
+    
+    render: function(){
+        var inlineState= {
+            display: this.state.isVisible ? 'block' : 'none'
+        }
+        
+        var subMessage = 'Nemalonu matyti.';
+        var messageMapsPublic = this.state.messageMaps.map(function(messageMap){
+        // console.log(this)
+            return <div><SubMessageMap amessage={messageMap} onDelete={this.deleteMessage} /></div>;
+        }.bind(this));
+        return (
+            <div className="container jumbotron" style={inlineState}>
+                <h1>Labas rytas, JSX</h1>
+                <div>
+                    <input type="text" ref="newMessage" />
+                    <button className="btn btn-primary" onClick={this.handleAdd}>Add</button>
+                </div>
+                <div><SubMessage message={subMessage} /></div>
+                { messageMapsPublic }
+            </div>
+            );
+    }
+});
+
+var SubMessageMap = React.createClass({
+    handleDelete: function(e){
+        // console.log(this.props) // būtinai reikia įrašyti kodą: .bind(this)
+        this.props.onDelete(this.props.amessage);
+    },
+    
+    getDefaultProps: function () {
+        return {
+            amessage: 'Masyvo elementų išspasudinimas.'
+        }    
+    },
+    
+    render: function(){
+        return (
+            <div>
+                <small>{this.props.amessage}</small>
+                <button onClick={this.handleDelete} className="btn btn-danger">X</button>
+            </div>
+        );
+    }
+});
+
+
+var SubMessage = React.createClass({
+//    propTypes: function() {
+////        message: React.PropTypes.string.isRequired;
+//    },
+    
+    getDefaultProps: function(){
+        return {
+            message: 'Malonu tave matyti.'
+        }
+    },
+    render: function(){
+        return (
+            <div>
+                <small>{this.props.message}</small>
+                
+            </div>
+        );
+    }
+});
+
+
+var reactComponent = React.renderComponent(
+    <MessageBoxJSX />,
+    document.getElementById('jsx')
+);
+
+    </script>
+</body>
+
+</html>
